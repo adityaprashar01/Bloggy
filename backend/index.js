@@ -4,6 +4,8 @@ import mongoose from "mongoose";
 import fileUpload from "express-fileupload";
 import { v2 as cloudinary } from 'cloudinary';
 import userRoute from "./routes/user.route.js";
+import blogRoute from "./routes/blog.route.js";
+import cookieParser from "cookie-parser";
 
 const app = express()
 dotenv.config()
@@ -13,6 +15,9 @@ const port = process.env.PORT;
 const MONGO_URL = process.env.MONGO_URI;
 //middleware
 app.use(express.json());
+app.use(cookieParser());
+
+
 app.use(fileUpload({
   useTempFiles: true,
   tempFileDir:"/tmp",
@@ -28,6 +33,7 @@ try {
 }
 //defining routers
 app.use("/api/users", userRoute);
+app.use("/api/blogs", blogRoute);
 
 //cloudinary 
 cloudinary.config({ 
