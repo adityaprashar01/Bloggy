@@ -41,7 +41,7 @@ function Register() {
         }
       )
       console.log(data)
-      alert(data.message || 'User registered Successfully')
+      toast.success(data.message || 'User registered Successfully')
       setName("");
       setEmail("");
       setPhone("");
@@ -53,7 +53,7 @@ function Register() {
 
     } catch (error) {
       console.log(error);
-      alert(error.message || "Please fill required fields")
+      toast.error(error.message || "Please fill required fields")
     }
   }
 

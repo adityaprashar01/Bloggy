@@ -7,14 +7,23 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
-                const { data } = await axios.get
-                    ("http://localhost:4001/api/blogs/all-blogs");
-                console.log(data)
-                setBlogs(data)
+                const token = localStorage.getItem("token"); // ✅ Get token from storage
+                if (!token) {
+                    console.error("No token found. User might not be logged in.");
+                    return;
+                }
+        
+                const { data } = await axios.get("http://localhost:4001/api/blogs/all-blogs", {
+                    headers: { Authorization: `Bearer ${token}` }, // ✅ Send token
+                });
+        
+                console.log("Blogs fetched successfully:", data);
+                setBlogs(data);
             } catch (error) {
-                console.log(error);
+                console.error("Error fetching blogs:", error.response ? error.response.data : error);
             }
         };
+        
         fetchBlogs();
     }, [])
 
